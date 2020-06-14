@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import root from "./redux/root";
 import "jquery/dist/jquery";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
 import { getUser, setUser, unsetUser } from "./utils/userStorage";
 import { onLogin } from "./redux/user/action";
 const store = createStore(root, applyMiddleware(thunk));

@@ -14,16 +14,16 @@ class Home extends Component {
     user: {},
   };
   async componentDidMount() {
-    this.setState({ loading: true });
-    if (this.props.user?.id) {
+    if (this.props.posts.length === 0) {
+      this.setState({ loading: true });
       const users = await list_user();
       // this.setState({ user: users[0] || {} });
       this.props.onGetUsers(users);
-    }
 
-    const posts = await list_posts();
-    this.props.onGetPosts(posts);
-    this.setState({ loading: false });
+      const posts = await list_posts();
+      this.props.onGetPosts(posts);
+      this.setState({ loading: false });
+    }
   }
   getPosts() {
     let posts = [];

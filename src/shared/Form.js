@@ -120,7 +120,7 @@ class MyForm extends Component {
     return (
       <MdEditor
         value={value}
-        style={{ height: "500px" }}
+        style={{ height: 350 }}
         renderHTML={(text) => mdParser.render(text)}
         onChange={(data) => this.handleEditorChange(name, data)}
       />
