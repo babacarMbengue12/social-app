@@ -30,7 +30,7 @@ class Home extends Component {
     if (!this.state.user?.id) {
       posts = this.props.posts;
     } else {
-      posts = this.props.posts.filter((p) => p.user.id === this.state.user.id);
+      posts = this.props.posts.filter((p) => p.user?.id === this.state.user.id);
     }
     posts = posts.map((p) => {
       p.order = new Date(p.created_at).getTime();
@@ -86,8 +86,8 @@ class Home extends Component {
                         />
                       </p>
                       <p>
-                        <small>Par {p.user.username}</small>
-                        <small>Par {p.created_at}</small>
+                        <small>Par {p.user?.username}</small>
+                        <small>{p.created_at}</small>
                       </p>
                       <Link
                         to={`/posts/show/${p.id}`}
@@ -95,7 +95,7 @@ class Home extends Component {
                       >
                         Read more
                       </Link>
-                      {this.props.user.id == p.user.id && (
+                      {this.props.user.id == p.user?.id && (
                         <div style={{ marginTop: 25 }}>
                           <Link
                             to={"/posts/edit/" + p.id}
