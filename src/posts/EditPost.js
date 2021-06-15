@@ -24,16 +24,16 @@ class EditAcount extends MyForm {
     content: Yup.string().required().min(15).label("Content"),
   });
   async componentDidMount() {
-    const id = this.props.match.params.id;
+    const id = String(this.props.match.params.id);
 
     let posts = this.props.posts;
     if (posts.length === 0) {
       posts = await list_posts();
     }
     if (id) {
-      const index = posts.findIndex((p) => p.id == id);
+      const index = posts.findIndex((p) => String(p.id) === id);
       if (index !== -1) {
-        if (posts[index].user.id == this.props.user.id) {
+        if (String(posts[index].user.id) === String(this.props.user.id)) {
           this.setState({
             data: { title: posts[index].title, content: posts[index].content },
           });

@@ -3,7 +3,6 @@ import Center from "../shared/Center";
 import MyForm from "../shared/Form";
 import { Form } from "react-bootstrap";
 import { edit_account } from "../utils/http/auth";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { setUser } from "../utils/userStorage";

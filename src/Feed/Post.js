@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { list_user, list_posts } from "../utils/http/user";
+import { list_posts } from "../utils/http/user";
 import { connect } from "react-redux";
 import Content from "./Content";
 class Home extends Component {
@@ -13,7 +13,7 @@ class Home extends Component {
       posts = await list_posts();
     }
     if (id) {
-      const index = posts.findIndex((p) => p.id == id);
+      const index = posts.findIndex((p) => String(p.id) === String(id));
       if (index !== -1) {
         this.setState({ post: posts[index] });
       }

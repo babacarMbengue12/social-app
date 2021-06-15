@@ -35,7 +35,6 @@ function getOptions(options) {
   return options;
 }
 function upload(data, route, method = "post") {
-  FormData = new FormData();
   Object.keys(data).map();
   const config = getOptions({
     headers: {

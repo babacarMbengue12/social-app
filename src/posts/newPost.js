@@ -1,5 +1,4 @@
 import React from "react";
-import Center from "../shared/Center";
 import MyForm from "../shared/Form";
 import { Form } from "react-bootstrap";
 import * as Yup from "yup";

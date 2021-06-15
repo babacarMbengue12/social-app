@@ -52,7 +52,7 @@ class Home extends Component {
     }
   }
   render() {
-    const { users, user } = this.props;
+    const { user } = this.props;
     const { currentIndex, perpage } = this.state;
     const d = this.getPosts();
     const posts = _.slice(d, 0, (currentIndex + 1) * perpage);
@@ -126,7 +126,7 @@ class Home extends Component {
                       >
                         Read more
                       </Link>
-                      {this.props.user.id == p.user?.id && (
+                      {String(this.props.user.id) === String(p.user?.id) && (
                         <div style={{ marginTop: 25 }}>
                           <Link
                             to={"/posts/edit/" + p.id}
@@ -182,52 +182,3 @@ const mapState = ({ users, posts, user }) => ({
 export default connect(mapState, { onGetPosts, onGetUsers, onDeletePost })(
   Home
 );
-
-{
-  /* <div className="col-md-3">
-  <li
-    class={!this.state.user?.id ? "list-group-item active" : "list-group-item"}
-  >
-    <a
-      onClick={(e) => {
-        e.preventDefault();
-        this.setState({ user: null });
-      }}
-      style={{ color: "inherit" }}
-      href="#"
-    >
-      All User
-    </a>
-  </li>
-  <ul className="list-group">
-    {users.map((p) => {
-      return (
-        <li
-          key={p.id}
-          className={
-            this.state.user?.id === p.id
-              ? "list-group-item active"
-              : "list-group-item"
-          }
-        >
-          <a
-            style={{ color: "inherit" }}
-            onClick={(e) => {
-              e.preventDefault();
-              this.setState({ user: p });
-            }}
-            href="#"
-          >
-            <Image
-              className="align-self-center mr-2"
-              src="https://via.placeholder.com/40/02"
-              roundedCircle
-            />
-            {p.username}
-          </a>
-        </li>
-      );
-    })}
-  </ul>
-</div>; */
-}

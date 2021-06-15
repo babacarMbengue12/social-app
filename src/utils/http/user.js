@@ -39,6 +39,7 @@ export async function update_user(id, { avatar, ...data }) {
 
   Object.keys(data).map((k) => {
     formdata.append(k, data[k]);
+    return k;
   });
 
   return http.upload(formdata, "/user/" + id + "/", () => null, "put");

@@ -53,7 +53,6 @@ class MyForm extends Component {
     );
   }
   renderFile(name, label) {
-    const data = this.state.data;
     return (
       <Form.Group controlId={name}>
         <Form.File
