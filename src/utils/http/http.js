@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getUser } from "../userStorage";
 
-export const ApiUrl = "https://strapi-crea.5ika.org";
+export const ApiUrl = "http://185.169.94.130:1337";
 const apiEndPoint = ApiUrl;
 export const resetPasswordUrl = apiEndPoint + "/password_reset/";
 

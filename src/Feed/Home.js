@@ -8,16 +8,18 @@ import { Spinner, Image } from "react-bootstrap";
 import _ from "lodash";
 import { delete_post } from "../utils/http/user";
 import Content from "./Content";
+import NewPost from "../posts/newPost";
 class Home extends Component {
   state = {
     loading: false,
+    currentIndex: 0,
+    perpage: 3,
     user: {},
   };
   async componentDidMount() {
     if (this.props.posts.length === 0) {
       this.setState({ loading: true });
       const users = await list_user();
-      // this.setState({ user: users[0] || {} });
       this.props.onGetUsers(users);
 
       const posts = await list_posts();
@@ -50,8 +52,11 @@ class Home extends Component {
     }
   }
   render() {
-    const { users } = this.props;
-    const posts = this.getPosts();
+    const { users, user } = this.props;
+    const { currentIndex, perpage } = this.state;
+    const d = this.getPosts();
+    const posts = _.slice(d, 0, (currentIndex + 1) * perpage);
+    const hasNext = (currentIndex + 1) * perpage < d.length;
     return (
       <div className="container mt-3">
         {this.state.loading && (
@@ -67,13 +72,39 @@ class Home extends Component {
           </div>
         )}
         <div className="row">
+          <div className="col-md-3">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                className="align-self-center"
+                src="https://via.placeholder.com/120/02"
+                roundedCircle
+              />
+            </div>
+            <div>
+              <h4 className="text-center">
+                {user.firstname} -- {user.lastname}
+              </h4>
+              <div className="text-center">
+                <Link to="/account/edit" className="btn btn-primary">
+                  Edit profile
+                </Link>
+              </div>
+            </div>
+          </div>
           <div className="col-md-9">
-            <div className="row">
+            <div className="row justify-content-center">
+              {!this.state.loading && <NewPost history={this.props.history} />}
               {posts.map((p) => {
                 return (
                   <div
                     key={p.id}
-                    className="card col-md-5 m-3"
+                    className="card col-md-8 m-3"
                     style={{ width: "18rem" }}
                   >
                     <div className="card-body">
@@ -115,6 +146,20 @@ class Home extends Component {
                   </div>
                 );
               })}
+              {hasNext && (
+                <div className="col-md-12 text-right mt-2 mb-2">
+                  <button
+                    onClick={() =>
+                      this.setState({
+                        currentIndex: this.state.currentIndex + 1,
+                      })
+                    }
+                    className="btn btn-success"
+                  >
+                    Load more
+                  </button>
+                </div>
+              )}
               {!this.state.loading && posts.length === 0 && (
                 <h4 className="text-center">
                   there is no post{" "}
@@ -122,56 +167,6 @@ class Home extends Component {
                 </h4>
               )}
             </div>
-          </div>
-          <div className="col-md-3">
-            <li
-              class={
-                !this.state.user?.id
-                  ? "list-group-item active"
-                  : "list-group-item"
-              }
-            >
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({ user: null });
-                }}
-                style={{ color: "inherit" }}
-                href="#"
-              >
-                All User
-              </a>
-            </li>
-            <ul className="list-group">
-              {users.map((p) => {
-                return (
-                  <li
-                    key={p.id}
-                    className={
-                      this.state.user?.id === p.id
-                        ? "list-group-item active"
-                        : "list-group-item"
-                    }
-                  >
-                    <a
-                      style={{ color: "inherit" }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.setState({ user: p });
-                      }}
-                      href="#"
-                    >
-                      <Image
-                        className="align-self-center mr-2"
-                        src="https://via.placeholder.com/40/02"
-                        roundedCircle
-                      />
-                      {p.username}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
           </div>
         </div>
       </div>
@@ -187,3 +182,52 @@ const mapState = ({ users, posts, user }) => ({
 export default connect(mapState, { onGetPosts, onGetUsers, onDeletePost })(
   Home
 );
+
+{
+  /* <div className="col-md-3">
+  <li
+    class={!this.state.user?.id ? "list-group-item active" : "list-group-item"}
+  >
+    <a
+      onClick={(e) => {
+        e.preventDefault();
+        this.setState({ user: null });
+      }}
+      style={{ color: "inherit" }}
+      href="#"
+    >
+      All User
+    </a>
+  </li>
+  <ul className="list-group">
+    {users.map((p) => {
+      return (
+        <li
+          key={p.id}
+          className={
+            this.state.user?.id === p.id
+              ? "list-group-item active"
+              : "list-group-item"
+          }
+        >
+          <a
+            style={{ color: "inherit" }}
+            onClick={(e) => {
+              e.preventDefault();
+              this.setState({ user: p });
+            }}
+            href="#"
+          >
+            <Image
+              className="align-self-center mr-2"
+              src="https://via.placeholder.com/40/02"
+              roundedCircle
+            />
+            {p.username}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</div>; */
+}

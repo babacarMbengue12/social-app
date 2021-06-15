@@ -48,14 +48,20 @@ class EditAcount extends MyForm {
   }
   render() {
     return (
-      <Center>
-        <h1 className="text-center">New Post</h1>
-        <Form style={{ minWidth: 300, maxWidth: 600 }}>
-          {this.renderInput("title", "Title")}
-          {this.renderMarkDown("content")}
-          {this.renderButton("New Post")}
-        </Form>
-      </Center>
+      <div className="col-md-12">
+        <div className="row">
+          <div className="col-md-2" />
+          <div className="col-md-8">
+            <h1 className="text-center">New Post</h1>
+            <Form>
+              {this.renderInput("title", "Title")}
+              {this.renderMarkDown("content")}
+              {this.renderButton("New Post")}
+            </Form>
+          </div>
+          <div className="col-md-2" />
+        </div>
+      </div>
     );
   }
 }
